@@ -21,7 +21,8 @@ namespace PracticasemU3.Controllers
         // GET: Peliculas/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var pelicula = db.Peliculas.Find(id);
+            return View(pelicula);
         }
 
         // GET: Peliculas/Create
@@ -49,16 +50,24 @@ namespace PracticasemU3.Controllers
         // GET: Peliculas/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var Pelicula = db.Peliculas.Find(id);
+            return View(Pelicula);
         }
 
         // POST: Peliculas/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Pelicula c)
         {
             try
             {
+                var pelicula = db.Peliculas.Find(id);
                 // TODO: Add update logic here
+
+                pelicula.Nombre = c.Nombre;
+                pelicula.Descripcion = c.Descripcion;
+                pelicula.Hora = c.Hora;
+                db.SaveChanges();
+
 
                 return RedirectToAction("Index");
             }
@@ -71,7 +80,10 @@ namespace PracticasemU3.Controllers
         // GET: Peliculas/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var pelicula = db.Peliculas.Find(id);
+            db.Peliculas.Remove(pelicula);
+            db.SaveChanges();
+            return View("Index");
         }
 
         // POST: Peliculas/Delete/5
